@@ -1,0 +1,7 @@
+<div class="container">
+  <h4>Add Quizz</h4>
+  <form [formGroup]="myForm" (ngSubmit)="save(myForm)" novalidate>
+    
+    <button type="submit" [disabled]="!myForm.valid">Submit</button>
+  </form>
+</div>
