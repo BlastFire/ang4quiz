@@ -1,7 +1,62 @@
 <div class="container">
-  <h4>Add Quizz</h4>
-  <form [formGroup]="myForm" (ngSubmit)="save(myForm)" novalidate>
-    
-    <button type="submit" [disabled]="!myForm.valid">Submit</button>
-  </form>
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="margin-20">
+        <h4>Add question</h4>
+      </div>
+      <form [formGroup]="myForm" novalidate (ngSubmit)="save(myForm)">
+        <div class="form-group">
+          <label>Question</label>
+          <input type="text" class="form-control" formControlName="question">
+          <!--display error message if name is not valid-->
+          <small *ngIf="!myForm.controls.question.valid" class="text-danger">
+            Question is required (minimum 1 characters).
+        </small>
+        </div>
+        <div formArrayName="answers">
+          <div *ngFor="let answer of myForm.controls.answers.controls; let i=index" class="panel panel-default">
+            {{ answer.value | json }}
+            {{ checkboxTracker[i]}} 
+            <div class="panel-heading">
+              <span>Answer {{i + 1}}</span>
+              <span class="glyphicon glyphicon-remove pull-right" *ngIf="myForm.controls.answers.controls.length > 1" (click)="removeAnswer(i)">
+                </span>
+            </div>
+            <div class="panel-body" [formGroupName]="i">
+              <div class="form-group col-xs-6">
+                <label>Answer title</label>
+                <input type="text" class="form-control" formControlName="answerTitle">
+                <label class="checkbox" style="margin-left:20px">
+                  <input type="checkbox" (change)="validateAnswerChoice($event, i)" formControlName="correct" [checked]="checkboxTracker[i]">Correct ?
+                </label> 
+                <small class="text-danger" [hidden]="myForm.controls.answers.controls[i].controls.answerTitle.valid">
+                        Answer is required
+                    </small>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <a (click)="addAnswer()" style="cursor: default">
+            Add another answer +
+          </a>
+        </div>
+
+        <div>
+          <button type="submit" [disabled]="!myForm.valid">Submit</button>
+        </div>
+
+        <div class="clearfix"></div>
+
+        <div>
+          <div>myForm details:-</div>
+          <pre>Is myForm valid?: <br>{{myForm.valid | json}}</pre>
+          <pre>checkboxes: <br>{{checkboxTracker | json}}</pre>
+          <pre>form value: <br>{{myForm.value | json}}</pre>
+        </div>
+
+      </form>
+    </div>
+  </div>
 </div>
