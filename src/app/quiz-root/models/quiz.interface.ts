@@ -1,6 +1,6 @@
 export interface Quiz {
     question: string; //required field with minum of 5 chars
-    answers: string[];
+    answers: Answer[];
 }
 
 export interface Answer {

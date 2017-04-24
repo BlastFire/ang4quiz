@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray, Validators, FormControl } from '@angular/forms';
-//import { Quiz } from './models/quiz.interface';
+import { Quiz, Answer } from './models/quiz.interface';
 
 @Component({
   selector: 'app-quiz-root',
@@ -10,8 +10,6 @@ import { FormBuilder, FormGroup, FormArray, Validators, FormControl } from '@ang
 export class QuizRootComponent implements OnInit {
 
   myForm: FormGroup;
-  checkboxTracker: boolean[] = [];
-
   constructor(private _fb: FormBuilder) { }
 
   ngOnInit() {
@@ -21,16 +19,6 @@ export class QuizRootComponent implements OnInit {
         this.initAnswer(),
       ])
     });
-
-    //checkbox tracker init
-    this.initCheckboxTracker();
-  }
-
-  initCheckboxTracker() {
-    let answersFA: FormArray = <FormArray>this.myForm.controls['answers'];
-    for (let i = 0; i < answersFA.length; i++) {
-      this.checkboxTracker.push(false);
-    }
   }
 
   initAnswer(): FormGroup {
@@ -42,36 +30,35 @@ export class QuizRootComponent implements OnInit {
     );
   }
 
-  //TODO
-  validateAnswerChoice(e, i) {
+  //single checkbox logic
+  //called from tmp
+  validateAnswerChoice(e, index, control) {
+    var answersTmp = <FormArray>this.myForm.controls['answers'];
     if (e.target.checked) {
-      this.checkboxTracker  = this.checkboxTracker.map((val, index) => {
-        return i === index ? true : false;
-      });
+      for (let i = 0; i < answersTmp.length; i++) {
+        i === index ? this.setCheckboxControlValue(i, true) : this.setCheckboxControlValue(i, false);
+      }
     } else {
-      this.checkboxTracker[i] = false;
+      this.setCheckboxControlValue(index, false);
     }
-
-  }
-
-  removeFromCheckboxTracker(i: number): void {
-    this.checkboxTracker = this.checkboxTracker.filter((x, index) => {
-      return (index !== i);
-    });
   }
 
   addAnswer(): void {
-    const control = <FormArray>this.myForm.controls['answers'];
+    const control = <FormArray>this.myForm.get('answers');
     control.push(this.initAnswer());
-    this.checkboxTracker.push(false);
   }
 
   removeAnswer(i: number) {
-    const control = <FormArray>this.myForm.controls['answers'];
+    const control = <FormArray>this.myForm.get('answers');
     control.removeAt(i);
-    this.removeFromCheckboxTracker(i);
   }
 
+  private setCheckboxControlValue(index, value) {
+    this.myForm.get('answers.' + index + ".correct").setValue(value);
+  }
+
+  //form submit method
+  //called from tmp
   save(model: FormGroup) {
     console.log(model);
   }

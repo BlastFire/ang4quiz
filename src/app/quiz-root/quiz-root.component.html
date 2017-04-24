@@ -16,7 +16,6 @@
         <div formArrayName="answers">
           <div *ngFor="let answer of myForm.controls.answers.controls; let i=index" class="panel panel-default">
             {{ answer.value | json }}
-            {{ checkboxTracker[i]}} 
             <div class="panel-heading">
               <span>Answer {{i + 1}}</span>
               <span class="glyphicon glyphicon-remove pull-right" *ngIf="myForm.controls.answers.controls.length > 1" (click)="removeAnswer(i)">
@@ -27,7 +26,7 @@
                 <label>Answer title</label>
                 <input type="text" class="form-control" formControlName="answerTitle">
                 <label class="checkbox" style="margin-left:20px">
-                  <input type="checkbox" (change)="validateAnswerChoice($event, i)" formControlName="correct" [checked]="checkboxTracker[i]">Correct ?
+                  <input type="checkbox" (change)="validateAnswerChoice($event, i, answer)" formControlName="correct" >Correct ?
                 </label> 
                 <small class="text-danger" [hidden]="myForm.controls.answers.controls[i].controls.answerTitle.valid">
                         Answer is required
@@ -52,7 +51,6 @@
         <div>
           <div>myForm details:-</div>
           <pre>Is myForm valid?: <br>{{myForm.valid | json}}</pre>
-          <pre>checkboxes: <br>{{checkboxTracker | json}}</pre>
           <pre>form value: <br>{{myForm.value | json}}</pre>
         </div>
 
