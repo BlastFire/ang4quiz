@@ -14,7 +14,7 @@ export class QuizRootComponent implements OnInit {
 
   ngOnInit() {
     this.myForm = this._fb.group({
-      question: ['', [Validators.required, Validators.minLength(1)]],
+      question: [''],
       answers: this._fb.array([
         this.initAnswer(),
       ])
@@ -24,8 +24,8 @@ export class QuizRootComponent implements OnInit {
   initAnswer(): FormGroup {
     return this._fb.group(
       {
-        answerTitle: ['', Validators.required],
-        correct: [false]
+        answerTitle: [''],
+        correct: ['', this.mustBeChecked]
       },
     );
   }
@@ -61,6 +61,15 @@ export class QuizRootComponent implements OnInit {
   //called from tmp
   save(model: FormGroup) {
     console.log(model);
+  }
+
+
+    mustBeChecked(control: FormControl): {[key: string]: string} {
+    if (!control.value) {
+      return {'mustBeCheckedError': 'Must be checked'};
+    } else {
+      return null;
+    }
   }
 
 }
