@@ -25,14 +25,16 @@ export class QuizRootComponent implements OnInit {
     return this._fb.group(
       {
         answerTitle: [''],
-        correct: ['', this.mustBeChecked]
+        correct: [false] //this.mustBeChecked
       },
     );
   }
 
+
   //single checkbox logic
   //called from tmp
   validateAnswerChoice(e, index, control) {
+    //console.log(control.get('correct')); //.errors['mustBeCheckedError']);
     var answersTmp = <FormArray>this.myForm.controls['answers'];
     if (e.target.checked) {
       for (let i = 0; i < answersTmp.length; i++) {
@@ -60,13 +62,32 @@ export class QuizRootComponent implements OnInit {
   //form submit method
   //called from tmp
   save(model: FormGroup) {
-    console.log(model);
+    //console.log(model);
+    //this.myForm.setErrors({"bla": "bla"});
+    let errorFound = this.validateCheckboxsesOnSubmit();
+    if (errorFound) return null;
+
+    console.log("save");
   }
 
+  //validate in submit, because we need to check more than one form control value
+  validateCheckboxsesOnSubmit(): boolean {
+    const control = <FormArray>this.myForm.get('answers');
+    var found = false;
+    for (let i = 0; i < control.length; i++) {
+      control.controls[i].get('correct').value === true ? found = true : found = false;
+    }
+    if (!found) {
+      this.myForm.setErrors({ "NotSingleCheckBoxSelected": "Not a single checkbox is selected." });
+      return true;
+    }
+    return false;
+  }
 
-    mustBeChecked(control: FormControl): {[key: string]: string} {
+  //single checkbox validator, not used
+  mustBeChecked(control: FormControl): { [key: string]: string } {
     if (!control.value) {
-      return {'mustBeCheckedError': 'Must be checked'};
+      return { 'mustBeCheckedError': 'Must be checked' };
     } else {
       return null;
     }

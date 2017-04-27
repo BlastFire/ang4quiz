@@ -9,13 +9,15 @@
           <label>Question</label>
           <input type="text" class="form-control" formControlName="question">
           <!--display error message if name is not valid-->
-          <small *ngIf="!myForm.controls.question.valid" class="text-danger">
+                <small class="text-danger" *ngIf="myForm.hasError('NotSingleCheckBoxSelected')">
+                        {{ myForm.errors['NotSingleCheckBoxSelected'] }}
+                </small>
+            <small *ngIf="!myForm.controls.question.valid" class="text-danger">
             Question is required (minimum 1 characters).
-        </small>
+          </small>
         </div>
         <div formArrayName="answers">
           <div *ngFor="let answer of myForm.controls.answers.controls; let i=index" class="panel panel-default">
-            {{ answer.value | json }}
             <div class="panel-heading">
               <span>Answer {{i + 1}}</span>
               <span class="glyphicon glyphicon-remove pull-right" *ngIf="myForm.controls.answers.controls.length > 1" (click)="removeAnswer(i)">
@@ -26,11 +28,14 @@
                 <label>Answer title</label>
                 <input type="text" class="form-control" formControlName="answerTitle">
                 <label class="checkbox" style="margin-left:20px">
-                  <input type="checkbox" (change)="validateAnswerChoice($event, i, answer)" formControlName="correct" >Correct ?
+                  <input type="checkbox" (change)="validateAnswerChoice($event, i, answer)" formControlName="correct" >Is this the correct answer ?
                 </label> 
                 <small class="text-danger" [hidden]="myForm.controls.answers.controls[i].controls.answerTitle.valid">
                         Answer is required
-                    </small>
+                </small>
+                <small class="text-danger" *ngIf="answer.get('correct').hasError('mustBeCheckedError')">
+                        checkbox is req
+                </small>
               </div>
             </div>
           </div>
@@ -43,7 +48,7 @@
         </div>
 
         <div>
-          <button type="submit" [disabled]="!myForm.valid">Submit</button>
+          <button type="submit">Submit</button>
         </div>
 
         <div class="clearfix"></div>
