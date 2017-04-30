@@ -9,6 +9,7 @@ import { Quiz, Answer } from './models/quiz.interface';
 })
 export class QuizRootComponent implements OnInit {
 
+  quizData: Quiz[] = [];
   myForm: FormGroup;
   constructor(private _fb: FormBuilder) { }
 
@@ -19,6 +20,22 @@ export class QuizRootComponent implements OnInit {
         this.initAnswer(),
       ])
     });
+  }
+
+  //form submit method
+  //called from html
+  save(model: FormGroup) {
+    let errorFound = this.validateCheckboxsesOnSubmit();
+    if (errorFound) return null;
+
+    //save data
+    this.quizData.push(this.myForm.value);
+
+
+    console.log("save");
+    //console.log(this.myForm);
+    //console.log(this.quizData);
+    
   }
 
   initAnswer(): FormGroup {
@@ -50,24 +67,13 @@ export class QuizRootComponent implements OnInit {
     control.push(this.initAnswer());
   }
 
-  removeAnswer(i: number) {
-    const control = <FormArray>this.myForm.get('answers');
-    control.removeAt(i);
-  }
+  // removeAnswer(i: number) {
+  //   const control = <FormArray>this.myForm.get('answers');
+  //   control.removeAt(i);
+  // }
 
   private setCheckboxControlValue(index, value) {
     this.myForm.get('answers.' + index + ".correct").setValue(value);
-  }
-
-  //form submit method
-  //called from tmp
-  save(model: FormGroup) {
-    //console.log(model);
-    //this.myForm.setErrors({"bla": "bla"});
-    let errorFound = this.validateCheckboxsesOnSubmit();
-    if (errorFound) return null;
-
-    console.log("save");
   }
 
   //validate in submit, because we need to check more than one form control value
