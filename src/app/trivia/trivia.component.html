@@ -8,11 +8,11 @@
       <form [formGroup]="myForm" novalidate (ngSubmit)="submit(myForm)">
         <div class="form-group">
           <label>Question</label>
-          <input type="text" class="form-control" formControlName="question">
+          <input type="text" class="form-control" formControlName="question" required>
           <!--display error message if name is not valid-->
-          <small class="text-danger" *ngIf="myForm.hasError('NotSingleCheckBoxSelected')">
+          <small *ngIf="myForm.hasError('NotSingleCheckBoxSelected')" class="text-danger">
                         {{ myForm.errors['NotSingleCheckBoxSelected'] }}
-                </small>
+          </small>
           <small *ngIf="!myForm.controls.question.valid" class="text-danger">
             Question is required (minimum 1 characters).
           </small>
@@ -23,7 +23,7 @@
 
         <br>
         <div>
-          <button type="submit" class="btn btn-primary">Submit</button>
+          <button type="submit" [disabled]="!myForm.valid" class="btn btn-primary">Submit</button>
         </div>
 
         <div class="clearfix"></div>
@@ -31,7 +31,6 @@
 
         <div>
           <div>myForm details:-</div>
-          <pre>Is myForm valid?: <br>{{myForm.valid | json}}</pre>
           <pre>form value: <br>{{myForm.value | json}}</pre>
         </div>
 

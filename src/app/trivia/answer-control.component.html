@@ -7,9 +7,13 @@
     <div class="panel-body">
       <div class="form-group col-xs-6">
         <label>Answer title</label>
-        <input type="text" class="form-control" formControlName="answerTitle">
+        <input type="text" class="form-control" formControlName="answerTitle" required>
+        <small *ngIf="!answer.valid" class="text-danger">
+            Answer is required (minimum 1 characters).
+        </small>
         <label class="checkbox" style="margin-left:20px">
-      <input type="checkbox" (change)="validateAnswerChoice($event, index, answer)" formControlName="correct" >Is this the correct answer ?
+      <input type="checkbox" (change)="validateAnswerChoice($event, index, answer)" formControlName="correct" >
+      <span formControlName="cbTitle" ngDefaultControl>{{ answer.value.cbTitle }}</span>
     </label>
       </div>
     </div>

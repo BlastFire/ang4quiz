@@ -1,4 +1,4 @@
-export interface trivia {
+export interface Trivia {
     question: string;
     answers: Answer[];
 }
