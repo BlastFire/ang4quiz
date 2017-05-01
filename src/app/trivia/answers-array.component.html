@@ -1,0 +1,6 @@
+<app-answer-control *ngFor="let answer of answersFormArray.controls; let i=index" [index]="i" [answer]="answer" (removed)="answersFormArray.removeAt($event)"></app-answer-control>
+<div>
+  <a (click)="addAnswer()" style="cursor: default">
+            Add another answer +
+          </a>
+</div>

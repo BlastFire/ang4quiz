@@ -1,0 +1,17 @@
+<div class="panel panel-default" [formGroup]="answer">
+  <div class="panel-heading" >
+    <span>Answer {{index + 1}}</span>
+    <span class="glyphicon glyphicon-remove pull-right" *ngIf="index > 0" (click)="removed.emit(index)"></span>
+  </div>
+
+    <div class="panel-body">
+      <div class="form-group col-xs-6">
+        <label>Answer title</label>
+        <input type="text" class="form-control" formControlName="answerTitle">
+        <label class="checkbox" style="margin-left:20px">
+      <input type="checkbox" (change)="validateAnswerChoice($event, index, answer)" formControlName="correct" >Is this the correct answer ?
+    </label>
+      </div>
+    </div>
+
+</div>

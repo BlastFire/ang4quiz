@@ -1,3 +1,21 @@
 myForm.controls.answers.controls[i].controls.answerTitle.valid
+--
 [disabled]="!myForm.valid"
+--
 this.myForm.setErrors({"bla": "bla"});
+----
+this.myForm = this._fb.group({
+    question: [''],
+    answers: this._fb.array([
+    this.initAnswer(),
+    ])
+});
+  initAnswer(): FormGroup {
+    return this._fb.group(
+      {
+        answerTitle: [''],
+        correct: [false] //this.mustBeChecked
+      },
+    );
+  }
+  --------
