@@ -1,0 +1,43 @@
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="margin-20">
+        <h4>Add question</h4>
+      </div>
+
+      <form [formGroup]="myForm" novalidate (ngSubmit)="submit(myForm)">
+        <div class="form-group">
+          <label>Question</label>
+          <input type="text" class="form-control" formControlName="question">
+          <!--display error message if name is not valid-->
+          <small class="text-danger" *ngIf="myForm.hasError('NotSingleCheckBoxSelected')">
+                        {{ myForm.errors['NotSingleCheckBoxSelected'] }}
+                </small>
+          <small *ngIf="!myForm.controls.question.valid" class="text-danger">
+            Question is required (minimum 1 characters).
+          </small>
+        </div>
+
+        <app-answers-array formArrayName="answers" [answersFormArray]="myForm.get('answers')">
+        </app-answers-array>
+
+        <br>
+        <div>
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+
+        <div class="clearfix"></div>
+        <br>
+
+        <div>
+          <div>myForm details:-</div>
+          <pre>Is myForm valid?: <br>{{myForm.valid | json}}</pre>
+          <pre>form value: <br>{{myForm.value | json}}</pre>
+        </div>
+
+
+      </form>
+
+    </div>
+  </div>
+</div>
