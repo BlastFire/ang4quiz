@@ -11,8 +11,11 @@ import { Trivia } from './models/trivia.interface';
 })
 export class TriviaComponent implements OnInit {
 
+  static messageTimeout: number = 2000; //2 secs
+
   myForm: FormGroup;
   trivia: Trivia[] = [];
+  formSaved: boolean = false;
 
   constructor(private fb: FormBuilder) { }
 
@@ -32,9 +35,17 @@ export class TriviaComponent implements OnInit {
     this.trivia.push(this.myForm.value);
 
     this.resetForm();
+    this.showMessageSuccess();
 
     console.log("Reactive Form submitted: ", this.trivia);
     return null;
+  }
+
+  showMessageSuccess() {
+    this.formSaved = true;
+    setTimeout(() => {
+      this.formSaved = false;
+    }, TriviaComponent.messageTimeout);
   }
 
   resetForm(): void {
