@@ -9,6 +9,10 @@ import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Valida
 })
 export class AnswerControlComponent implements OnInit {
 
+  static checkboxTitleDefault: string = "Set if correct answer";
+  static checkboxTitleChecked: string = "This is marked as correct answer";
+
+
   @Input()
   public index: number;
 
@@ -37,12 +41,15 @@ export class AnswerControlComponent implements OnInit {
 
   private setCheckboxControlValue(control, index, value) {
     control.parent.controls[index].get('correct').setValue(value);
+    value ? control.parent.controls[index].get('cbTitle').setValue(AnswerControlComponent.checkboxTitleChecked) :
+      control.parent.controls[index].get('cbTitle').setValue(AnswerControlComponent.checkboxTitleDefault);
   }
 
   static buildItem(val: string) {
     return new FormGroup({
-      answerTitle: new FormControl(val),
-      correct: new FormControl(false)
+      answerTitle: new FormControl(val, Validators.required),
+      correct: new FormControl(false),
+      cbTitle: new FormControl(AnswerControlComponent.checkboxTitleDefault)
     })
   }
 
