@@ -28,6 +28,7 @@
         <br>
         <div>
           <button type="submit" [disabled]="!myForm.valid" class="btn btn-primary">Submit</button>
+          <button type="button" [disabled]="!triviaService.triviaValid()" (click)="finishClicked()" class="btn btn-primary">Finish</button>
         </div>
 
         <div class="clearfix"></div>

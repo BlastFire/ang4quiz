@@ -1,8 +1,8 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, DoCheck, SimpleChanges } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { AnswersArrayComponent } from './answers-array.component';
 import { AnswerControlComponent } from './answer-control.component';
-import { Trivia } from './models/trivia.interface';
+import { TriviaService } from './services/trivia.service';
 
 @Component({
   selector: 'app-trivia',
@@ -14,10 +14,9 @@ export class TriviaComponent implements OnInit {
   static messageTimeout: number = 2000; //2 secs
 
   myForm: FormGroup;
-  trivia: Trivia[] = [];
   formSaved: boolean = false;
 
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder, private triviaService: TriviaService) { }
 
   ngOnInit() {
     // build the form model
@@ -27,17 +26,22 @@ export class TriviaComponent implements OnInit {
     });
   }
 
+  //TODO.. redirect to home page where would be the statistic for all the quests
+  finishClicked() {
+    console.log("clicked");
+  }
+
   submit() {
     let error = this.validateCheckboxsesOnSubmit();
     //return early
     if (error || !this.myForm.valid) return null;
 
-    this.trivia.push(this.myForm.value);
+    this.triviaService.trivia.push(this.myForm.value);
 
     this.resetForm();
     this.showMessageSuccess();
 
-    console.log("Reactive Form submitted: ", this.trivia);
+    console.log("Reactive Form submitted: ", this.triviaService.trivia);
     return null;
   }
 
