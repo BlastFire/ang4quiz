@@ -1,34 +1,43 @@
 import { Component, EventEmitter, Input, OnInit, Output, DoCheck, SimpleChanges } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { AnswersArrayComponent } from './answers-array.component';
 import { AnswerControlComponent } from './answer-control.component';
 import { TriviaService } from './services/trivia.service';
+import { Trivia } from './models/trivia.interface';
 
 @Component({
-  selector: 'app-trivia',
-  templateUrl: './trivia.component.html',
-  styleUrls: ['./trivia.component.css']
+  selector: 'app-question',
+  templateUrl: './question.component.html',
+  styleUrls: ['./question.component.css']
 })
-export class TriviaComponent implements OnInit {
+export class QuestionComponent implements OnInit {
 
   static messageTimeout: number = 2000; //2 secs
 
   myForm: FormGroup;
   formSaved: boolean = false;
 
-  constructor(private fb: FormBuilder, private triviaService: TriviaService) { }
+  constructor(private fb: FormBuilder, private triviaService: TriviaService, private router: Router) { }
 
   ngOnInit() {
     // build the form model
     this.myForm = this.fb.group({
-      question: ['', Validators.required],
+      name: ['', Validators.required],
       answers: AnswersArrayComponent.buildItems()
     });
   }
 
-  //TODO.. redirect to home page where would be the statistic for all the quests
   finishClicked() {
-    console.log("clicked");
+    this.saveData();
+    //redirect to home
+    this.router.navigate(['/']);
+  }
+
+  saveData() {
+    this.triviaService.trivia.push({ triviaName: <string><any>this.triviaService.trivia.length + 1, questions: this.triviaService.questions });
+    this.triviaService.questions = [];
+    //console.log(this.triviaService.trivia);
   }
 
   submit() {
@@ -36,12 +45,12 @@ export class TriviaComponent implements OnInit {
     //return early
     if (error || !this.myForm.valid) return null;
 
-    this.triviaService.trivia.push(this.myForm.value);
+    this.triviaService.questions.push(this.myForm.value);
 
     this.resetForm();
     this.showMessageSuccess();
 
-    console.log("Reactive Form submitted: ", this.triviaService.trivia);
+    console.log("Reactive Form submitted: ", this.triviaService.questions);
     return null;
   }
 
@@ -49,7 +58,7 @@ export class TriviaComponent implements OnInit {
     this.formSaved = true;
     setTimeout(() => {
       this.formSaved = false;
-    }, TriviaComponent.messageTimeout);
+    }, QuestionComponent.messageTimeout);
   }
 
   resetForm(): void {

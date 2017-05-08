@@ -12,12 +12,12 @@
       <form [formGroup]="myForm" novalidate (ngSubmit)="submit(myForm)">
         <div class="form-group">
           <label>Question</label>
-          <input type="text" class="form-control" formControlName="question" required>
+          <input type="text" class="form-control" formControlName="name" required>
           <!--display error message if name is not valid-->
           <small *ngIf="myForm.hasError('NotSingleCheckBoxSelected')" class="text-danger">
                         {{ myForm.errors['NotSingleCheckBoxSelected'] }}
           </small>
-          <small *ngIf="!myForm.controls.question.valid" class="text-danger">
+          <small *ngIf="!myForm.controls.name.valid" class="text-danger">
             Question is required (minimum 1 characters).
           </small>
         </div>
@@ -28,7 +28,7 @@
         <br>
         <div>
           <button type="submit" [disabled]="!myForm.valid" class="btn btn-primary">Submit</button>
-          <button type="button" [disabled]="!triviaService.triviaValid()" (click)="finishClicked()" class="btn btn-primary">Finish</button>
+          <button type="button" [disabled]="!triviaService.questionsValid()" (click)="finishClicked()" class="btn btn-primary">Finish</button>
         </div>
 
         <div class="clearfix"></div>

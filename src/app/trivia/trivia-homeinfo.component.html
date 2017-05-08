@@ -1,3 +1,16 @@
-<p>
-  trivia-homeinfo works!
-</p>
+<div *ngIf="triviaService.triviaValid(); else NOTRIVIA">lal
+  <div class="row">
+    <div *ngFor="let trivia of triviaService.getTrivia()" class="col-xs-12 col-md-8 col-md-offset-1">
+      <h5>{{trivia.triviaName}}</h5>
+      <hr>
+      <p>Topic: TOPIC</p>
+      <p>Number of time completed: NTC</p>
+      <p>Number of questions: {{trivia.questions.length}}</p>
+      <hr>
+      <button class="btn btn-secondary">Edit trivia name</button>
+    </div>
+  </div>
+</div>
+<ng-template #NOTRIVIA>
+  <h3>NO TRIVIA DATA</h3>
+<ng-template>
