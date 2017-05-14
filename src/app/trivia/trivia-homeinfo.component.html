@@ -1,6 +1,6 @@
-<div *ngIf="true; else NOTRIVIA">  <!-- triviaService.triviaValid() -->
+<div *ngIf="triviaService.triviaValid(); else NOTRIVIA">  <!-- triviaService.triviaValid() -->
   <div class="row">
-    <div *ngFor="let trivia of triviaService.dummyData(); let i = index" class="col-xs-12 col-md-8 col-md-offset-1">
+    <div *ngFor="let trivia of triviaService.getTrivia(); let i = index" class="col-xs-12 col-md-8 col-md-offset-1">
       <div *ngIf="editName; else NOEDIT">
         <input type="text" value="{{trivia.triviaName}}" #triviaName/><button class="btn btn-default" (click)="saveTriviaName(triviaName.value, i)">OK</button>
       </div>

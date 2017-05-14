@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { AnswersArrayComponent } from './answers-array.component';
 import { AnswerControlComponent } from './answer-control.component';
 import { TriviaService } from './services/trivia.service';
-import { Trivia } from './models/trivia.interface';
+import { Trivia, Question } from './models/trivia.interface';
 
 @Component({
   selector: 'app-question',
@@ -28,29 +28,39 @@ export class QuestionComponent implements OnInit {
     });
   }
 
-  finishClicked() {
-    this.saveData();
-    //redirect to home
-    this.router.navigate(['/']);
-  }
+  questionData: Question;
 
-  saveData() {
-    this.triviaService.trivia.push({ id: this.triviaService.nextTriviaId(), triviaName: <string><any>this.triviaService.trivia.length + 1, questions: this.triviaService.questions });
-    this.triviaService.questions = [];
-    //console.log(this.triviaService.trivia);
-  }
-
-  submit() {
+  submit(myForm: FormGroup) {
     let error = this.validateCheckboxsesOnSubmit();
     //return early
-    if (error || !this.myForm.valid) return null;
-    this.triviaService.questions.push(this.myForm.value);
+    if (error || !myForm.valid) return null;
+
+    //pushin data to service
+    this.pushQuestionData(myForm.value);
 
     this.resetForm();
     this.showMessageSuccess();
 
     console.log("Reactive Form submitted: ", this.triviaService.questions);
     return null;
+  }
+
+  pushQuestionData(myFormValue: any) {
+    myFormValue.id = this.triviaService.nextQuestionId();
+    this.triviaService.questions.push(myFormValue);
+    console.log(this.triviaService.questions);
+  }
+
+    finishClicked() {
+    this.saveData();
+    //redirect to home
+    //this.router.navigate(['/']);
+  }
+
+  saveData() {
+    this.triviaService.trivia.push({ id: this.triviaService.nextTriviaId(), triviaName: <string><any>this.triviaService.trivia.length + 1, questions: this.triviaService.questions });
+    this.triviaService.questions = [];
+    console.log(this.triviaService.trivia);
   }
 
   showMessageSuccess() {

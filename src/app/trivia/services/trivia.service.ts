@@ -8,6 +8,7 @@ export class TriviaService {
   questions: Question[] = [];
 
   triviaId: number = 0;
+  questionId: number = 0;
 
   dummyTrivia: Trivia = {
     id: 1,
@@ -32,8 +33,12 @@ export class TriviaService {
     this.dummyTriviaArray.push(this.dummyTrivia);
   }
 
+  nextQuestionId(): number {
+    return this.questionId += 1;
+  }
+
   nextTriviaId(): number {
-    return this.triviaId + 1;
+    return this.triviaId += 1;
   }
 
   questionsValid(): boolean {
