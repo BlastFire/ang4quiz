@@ -35,7 +35,7 @@ export class QuestionComponent implements OnInit {
   }
 
   saveData() {
-    this.triviaService.trivia.push({ triviaName: <string><any>this.triviaService.trivia.length + 1, questions: this.triviaService.questions });
+    this.triviaService.trivia.push({ id: this.triviaService.nextTriviaId(), triviaName: <string><any>this.triviaService.trivia.length + 1, questions: this.triviaService.questions });
     this.triviaService.questions = [];
     //console.log(this.triviaService.trivia);
   }
@@ -44,7 +44,6 @@ export class QuestionComponent implements OnInit {
     let error = this.validateCheckboxsesOnSubmit();
     //return early
     if (error || !this.myForm.valid) return null;
-
     this.triviaService.questions.push(this.myForm.value);
 
     this.resetForm();

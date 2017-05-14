@@ -7,7 +7,34 @@ export class TriviaService {
   trivia: Trivia[] = [];
   questions: Question[] = [];
 
-  constructor() { }
+  triviaId: number = 0;
+
+  dummyTrivia: Trivia = {
+    id: 1,
+    triviaName: "triviaName1",
+    questions: [
+      {
+        id: 1,
+        name: "question1",
+        answers: [
+          {
+            id: 1,
+            answerTitle: "answerTitle1",
+            correct: true
+          }]
+      }
+    ]
+  };
+
+  dummyTriviaArray: Trivia[] = [];
+
+  constructor() {
+    this.dummyTriviaArray.push(this.dummyTrivia);
+  }
+
+  nextTriviaId(): number {
+    return this.triviaId + 1;
+  }
 
   questionsValid(): boolean {
     return this.questions.length > 0;
@@ -27,6 +54,11 @@ export class TriviaService {
 
   triviaLength(): number {
     return this.trivia.length;
+  }
+
+  dummyData(): Trivia[] {
+    return this.dummyTriviaArray;
+
   }
 
 

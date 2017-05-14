@@ -1,16 +1,37 @@
-<div *ngIf="triviaService.triviaValid(); else NOTRIVIA">lal
+<div *ngIf="true; else NOTRIVIA">  <!-- triviaService.triviaValid() -->
   <div class="row">
-    <div *ngFor="let trivia of triviaService.getTrivia()" class="col-xs-12 col-md-8 col-md-offset-1">
-      <h5>{{trivia.triviaName}}</h5>
+    <div *ngFor="let trivia of triviaService.dummyData(); let i = index" class="col-xs-12 col-md-8 col-md-offset-1">
+      <div *ngIf="editName; else NOEDIT">
+        <input type="text" value="{{trivia.triviaName}}" #triviaName/><button class="btn btn-default" (click)="saveTriviaName(triviaName.value, i)">OK</button>
+      </div>
+      <ng-template #NOEDIT>
+          <h4>Trivia Name: </h4><h5>{{trivia.triviaName}}</h5>
+      </ng-template>
       <hr>
       <p>Topic: TOPIC</p>
       <p>Number of time completed: NTC</p>
       <p>Number of questions: {{trivia.questions.length}}</p>
       <hr>
-      <button class="btn btn-secondary">Edit trivia name</button>
+      <button class="btn btn-secondary" (click)="editName = true">Edit trivia name</button>
+      <button class="btn btn-danger" data-toggle="modal" data-target="#myModal" (click)="deleteTrivia(i)">Delete trivia</button>
     </div>
   </div>
 </div>
 <ng-template #NOTRIVIA>
   <h3>NO TRIVIA DATA</h3>
-<ng-template>
+  </ng-template>
+
+<hr>
+<!-- MODAL test -->
+
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <app-crn-modal [modalData]="editId" [modalOptions]="modal" (fromLeft)="fromLeftModal($event)"></app-crn-modal>
+    <!-- Modal content end -->
+
+  </div>
+</div>
+

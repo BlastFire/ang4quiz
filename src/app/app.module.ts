@@ -12,6 +12,7 @@ import { TriviaMainComponent } from './trivia/trivia-main/trivia-main.component'
 import { TriviaStartComponent } from './trivia/trivia-start/trivia-start.component';
 import { TriviaHomeinfoComponent } from './trivia/trivia-homeinfo.component';
 import { TriviaService } from './trivia/services/trivia.service';
+import { CrnModalComponent } from './crn-modal/crn-modal.component';
 
 const appRoutes: Routes = [
   { path: '', component: TriviaHomeinfoComponent },
@@ -28,6 +29,7 @@ const appRoutes: Routes = [
     TriviaMainComponent,
     TriviaStartComponent,
     TriviaHomeinfoComponent,
+    CrnModalComponent,
   ],
   imports: [
     BrowserModule,
