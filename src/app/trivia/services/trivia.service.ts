@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Trivia, Question } from '../models/trivia.interface';
+import { TriviaMock } from '../models/dummyTrivia';
 
 @Injectable()
 export class TriviaService {
@@ -10,22 +11,7 @@ export class TriviaService {
   triviaId: number = 0;
   questionId: number = 0;
 
-  dummyTrivia: Trivia = {
-    id: 1,
-    triviaName: "triviaName1",
-    questions: [
-      {
-        id: 1,
-        name: "question1",
-        answers: [
-          {
-            id: 1,
-            answerTitle: "answerTitle1",
-            correct: true
-          }]
-      }
-    ]
-  };
+  dummyTrivia: Trivia = TriviaMock;
 
   dummyTriviaArray: Trivia[] = [];
 

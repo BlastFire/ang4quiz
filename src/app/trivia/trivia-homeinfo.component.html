@@ -1,6 +1,6 @@
-<div *ngIf="triviaService.triviaValid(); else NOTRIVIA">  <!-- triviaService.triviaValid() -->
+<div *ngIf="true; else NOTRIVIA">  <!-- triviaService.triviaValid() -->
   <div class="row">
-    <div *ngFor="let trivia of triviaService.getTrivia(); let i = index" class="col-xs-12 col-md-8 col-md-offset-1">
+    <div *ngFor="let trivia of triviaService.dummyData(); let i = index" class="col-xs-12 col-md-8 col-md-offset-1">
       <div *ngIf="editName; else NOEDIT">
         <input type="text" value="{{trivia.triviaName}}" #triviaName/><button class="btn btn-default" (click)="saveTriviaName(triviaName.value, i)">OK</button>
       </div>
@@ -14,6 +14,7 @@
       <hr>
       <button class="btn btn-secondary" (click)="editName = true">Edit trivia name</button>
       <button class="btn btn-danger" data-toggle="modal" data-target="#myModal" (click)="deleteTrivia(i)">Delete trivia</button>
+      <a href="#" class="btn btn-info" [routerLink]="['/start-trivia', trivia.id]">Take the trivia2</a>
     </div>
   </div>
 </div>

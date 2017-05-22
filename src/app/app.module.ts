@@ -17,7 +17,7 @@ import { CrnModalComponent } from './crn-modal/crn-modal.component';
 const appRoutes: Routes = [
   { path: '', component: TriviaHomeinfoComponent },
   { path: 'create-trivia', component: QuestionComponent },
-  { path: 'start-trivia', component: TriviaStartComponent },
+  { path: 'start-trivia/:id', component: TriviaStartComponent },
 ];
 
 @NgModule({
