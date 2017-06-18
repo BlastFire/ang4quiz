@@ -1,3 +1,34 @@
-<p>
-  trivia-start works!
-</p>
+<form  #qForm="ngForm">
+    <div class="row">
+        <h1>Question1 title</h1>
+        <div class='col-xs-10 col-sm-4'>
+            <div class="form-group">
+                <div class="radio">
+                    <label>
+                        <input type="radio" name="correctAnswer1" ngModel value="Design">Design
+                    </label>
+                </div>
+                <div class="radio">
+                    <label>
+                        <input type="radio" name="correctAnswer1" ngModel value="Code">Code
+                    </label>
+                </div>
+                <div class="radio">
+                    <label>
+                        <input type="radio" name="correctAnswer1" ngModel value="Deploy">Deploy
+                    </label>
+                </div>
+                <hr />
+                <div *ngFor="let resAnswer of configQQ.answers; let idx = index">
+                    <div class="radio">
+                    <label>
+                        <input type="radio" [id]=idx name="correctAnswer" ngModel value="{{ resAnswer.answerTitle }}">{{ resAnswer.answerTitle }}
+                    </label>
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <button class="btn btn-primary" (click)="next(qForm)">Next</button>
+</form>

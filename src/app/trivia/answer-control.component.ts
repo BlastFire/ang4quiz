@@ -47,6 +47,7 @@ export class AnswerControlComponent implements OnInit {
 
   static buildItem(val: string) {
     return new FormGroup({
+      id: new FormControl(),
       answerTitle: new FormControl(val, Validators.required),
       correct: new FormControl(false),
       cbTitle: new FormControl(AnswerControlComponent.checkboxTitleDefault)

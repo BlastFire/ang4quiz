@@ -12,11 +12,11 @@ export const TriviaMock: Trivia = {
                     correct: false
                 },
                 {
-                    answerTitle: "q1_answerTitle1",
+                    answerTitle: "q1_answerTitle2",
                     correct: true
                 },
                 {
-                    answerTitle: "q1_answerTitle1",
+                    answerTitle: "q1_answerTitle3",
                     correct: false
                 }
             ]
