@@ -15,12 +15,18 @@ export class TriviaService {
 
   dummyTriviaArray: Trivia[] = [];
 
+  static answerId = 1000;
+
   constructor() {
     this.dummyTriviaArray.push(this.dummyTrivia);
   }
 
   nextQuestionId(): number {
     return this.questionId += 1;
+  }
+
+  nextAnswerId(): number { 
+    return this.questionId += 10;
   }
 
   nextTriviaId(): number {

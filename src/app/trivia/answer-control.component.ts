@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { TriviaService } from './services/trivia.service';
 
 @Component({
   selector: 'app-answer-control',
@@ -22,7 +23,7 @@ export class AnswerControlComponent implements OnInit {
   @Output()
   public removed: EventEmitter<number> = new EventEmitter<number>();
 
-  constructor() { }
+  constructor(private triviaService: TriviaService) { }
 
   ngOnInit() {
   }
@@ -47,7 +48,7 @@ export class AnswerControlComponent implements OnInit {
 
   static buildItem(val: string) {
     return new FormGroup({
-      id: new FormControl(),
+      id: new FormControl(TriviaService.answerId += 1),
       answerTitle: new FormControl(val, Validators.required),
       correct: new FormControl(false),
       cbTitle: new FormControl(AnswerControlComponent.checkboxTitleDefault)
