@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { TriviaService } from '../services/trivia.service';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Question } from '../models/trivia.interface';
+import { TriviaService } from '../services/trivia.service';
+import { UserResultService } from '../services/user-result.service';
 
 @Component({
   selector: 'app-trivia-start',
@@ -19,9 +20,11 @@ export class TriviaStartComponent implements OnInit {
   nextQuestionArrId: number = 0;
   questionArrLength: number = 0;
 
-  resTmpObj: { id: number, userAnswer: string };
+  finish: boolean = false;
 
-  constructor(private route: ActivatedRoute, private triviaService: TriviaService) { }
+  constructor(private route: ActivatedRoute, 
+              private router: Router,
+              private triviaService: TriviaService, private userService: UserResultService) { }
 
   ngOnInit() {
     //this.triviaId = this.route.snapshot.params['id'];
@@ -40,14 +43,30 @@ export class TriviaStartComponent implements OnInit {
       this.configQQ = this.getNextQuestion();
     } else {
       console.log("finish the questions");
-      console.log(this.dataSaver);
+      //console.log(this.dataSaver);
+      //trivia is over, add the data to user service
+      this.prepResultDataAndSaveInService(this.dataSaver);
+
+      //redirect to statistics page
+      this.router.navigate(['/statistics']);
+
     }
+  }
+
+  prepResultDataAndSaveInService(data: any[]): void {
+    var userTrivia = {
+      userTriviaId: this.triviaId,
+      userId: 5,
+      questions: data
+    };
+    console.log(userTrivia);
+
   }
 
   saveFormData(formData: any): void {
     formData.id = this.configQQ.id;
     this.dataSaver.push(formData);
-    console.log(this.dataSaver);
+    //console.log(this.dataSaver);
   }
 
   nextBtnText(): string {

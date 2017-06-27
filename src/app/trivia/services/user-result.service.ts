@@ -5,8 +5,8 @@ export class UserResultService {
 
   userStatistic: {
     userId: number,
-    triviaId: number,
-    questions: [{
+    userTriviaId: number,
+    userQuestions: [{
       id: number,
       userAnswer: number
     }]
@@ -15,7 +15,8 @@ export class UserResultService {
   constructor() { }
 
   addResultToStatistic(obj: any) {
-    console.log(obj);
+    //var userTrivia = 
+    //this.userStatistic.questions = obj;
   }
 
 

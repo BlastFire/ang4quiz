@@ -12,12 +12,15 @@ import { TriviaMainComponent } from './trivia/trivia-main/trivia-main.component'
 import { TriviaStartComponent } from './trivia/trivia-start/trivia-start.component';
 import { TriviaHomeinfoComponent } from './trivia/trivia-homeinfo.component';
 import { TriviaService } from './trivia/services/trivia.service';
+import { UserResultService } from './trivia/services/user-result.service';
 import { CrnModalComponent } from './crn-modal/crn-modal.component';
+import { StatisticComponent } from './trivia/statistics/statistic.component';
 
 const appRoutes: Routes = [
   { path: '', component: TriviaHomeinfoComponent },
   { path: 'create-trivia', component: QuestionComponent },
   { path: 'start-trivia/:id', component: TriviaStartComponent },
+  { path: 'statistics', component: StatisticComponent }
 ];
 
 @NgModule({
@@ -30,6 +33,7 @@ const appRoutes: Routes = [
     TriviaStartComponent,
     TriviaHomeinfoComponent,
     CrnModalComponent,
+    StatisticComponent,
   ],
   imports: [
     BrowserModule,
@@ -39,7 +43,7 @@ const appRoutes: Routes = [
     RouterModule.forRoot(appRoutes),
     AlertModule.forRoot()
   ],
-  providers: [TriviaService],
+  providers: [TriviaService, UserResultService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
