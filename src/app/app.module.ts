@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
+import { HttpClientModule} from '@angular/common/http';
 import { Routes, RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 import { AlertModule } from 'ngx-bootstrap';
@@ -12,6 +13,7 @@ import { TriviaMainComponent } from './trivia/trivia-main/trivia-main.component'
 import { TriviaStartComponent } from './trivia/trivia-start/trivia-start.component';
 import { TriviaHomeinfoComponent } from './trivia/trivia-homeinfo.component';
 import { TriviaService } from './trivia/services/trivia.service';
+import { WebService } from './trivia/services/web.service';
 import { UserResultService } from './trivia/services/user-result.service';
 import { CrnModalComponent } from './crn-modal/crn-modal.component';
 import { StatisticComponent } from './trivia/statistics/statistic.component';
@@ -40,10 +42,11 @@ const appRoutes: Routes = [
     FormsModule,
     ReactiveFormsModule,
     HttpModule,
+    HttpClientModule,
     RouterModule.forRoot(appRoutes),
     AlertModule.forRoot()
   ],
-  providers: [TriviaService, UserResultService],
+  providers: [TriviaService, UserResultService, WebService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

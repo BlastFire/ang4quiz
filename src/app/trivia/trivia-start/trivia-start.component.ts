@@ -1,8 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Question } from '../models/trivia.interface';
+import { Response } from '@angular/http';
+import { Http } from '@angular/http';
+import 'rxjs/add/operator/map';
+
 import { TriviaService } from '../services/trivia.service';
+import { Question } from '../models/trivia.interface';
 import { UserResultService } from '../services/user-result.service';
+import { WebService } from '../services/web.service';
 
 @Component({
   selector: 'app-trivia-start',
@@ -22,9 +27,13 @@ export class TriviaStartComponent implements OnInit {
 
   finish: boolean = false;
 
-  constructor(private route: ActivatedRoute, 
-              private router: Router,
-              private triviaService: TriviaService, private userService: UserResultService) { }
+  constructor(private route: ActivatedRoute,
+    private router: Router,
+    private triviaService: TriviaService,
+    private userService: UserResultService,
+    private http: Http,
+    private webService: WebService
+  ) { }
 
   ngOnInit() {
     //this.triviaId = this.route.snapshot.params['id'];
@@ -43,24 +52,24 @@ export class TriviaStartComponent implements OnInit {
       this.configQQ = this.getNextQuestion();
     } else {
       console.log("finish the questions");
-      //console.log(this.dataSaver);
-      //trivia is over, add the data to user service
+      //trivia is over, add the data to web service
       this.prepResultDataAndSaveInService(this.dataSaver);
 
       //redirect to statistics page
-      this.router.navigate(['/statistics']);
+      //this.router.navigate(['/statistics']);
 
     }
   }
 
-  prepResultDataAndSaveInService(data: any[]): void {
+  prepResultDataAndSaveInService(data: any[]): any {
     var userTrivia = {
       userTriviaId: this.triviaId,
+      name: "T1",
       userId: 5,
       questions: data
     };
-    console.log(userTrivia);
 
+    this.webService.saveUserTrivia(userTrivia).subscribe(rData => console.log(rData));
   }
 
   saveFormData(formData: any): void {
@@ -90,10 +99,7 @@ export class TriviaStartComponent implements OnInit {
   }
 
   hasMoreQuestions(): boolean {
-    if (this.questionArrLength - 1 >= this.nextQuestionArrId) {
-      return true;
-    }
-    return false;
+    return this.questionArrLength - 1 >= this.nextQuestionArrId ? true : false;
   }
 
 }
